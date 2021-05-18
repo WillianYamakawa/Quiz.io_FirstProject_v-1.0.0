@@ -5,13 +5,14 @@ My first own project, it was designed to be an simple and not that secure projec
 
 Database: no use of databases so it becomes easier to set up this site on your computer
 
+
 How to use the site?
 
 1- download all the files in a folder
 
 2- make sure you have node installed
 
-3- in cmd type node install
+3- in cmd type npm install
 
 4- in cmd type node index.js
 
