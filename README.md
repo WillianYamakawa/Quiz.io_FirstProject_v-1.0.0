@@ -3,6 +3,8 @@ My first own project, it was designed to be an simple and not that secure projec
 
 # 1746 lines of code
 
+Database: no use of databases so it becomes easier to set up this site on your computer
+
 How to use the site?
 
 1- download all the files in a folder
