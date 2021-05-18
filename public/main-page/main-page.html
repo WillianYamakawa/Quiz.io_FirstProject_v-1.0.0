@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz.io</title>
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jaldi:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <!---CSS-->
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap");
+
+
+
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        
+      }
+      body {
+        background-color: #313335;
+      }
+      header {
+        width: 100%;
+        height: 70px;
+        background-color: #282828;
+      }
+      header h1 {
+        position: absolute;
+        padding: 3px;
+        float: left;
+        margin-left: 2%;
+        margin-top: 10px;
+        font-family: "Alfa Slab One";
+        color: #39ca74;
+      }
+      header ul {
+        width: auto;
+        float: right;
+        margin-top: 8px;
+      }
+      .titulo {
+        font-family: "Alfa Slab One";
+        color: #39ca74;
+        font-size: 68px;
+        text-align: center;
+        margin-top: 130px;
+      }
+     
+      .titulo span {
+        color: #d1d1d1;
+      }
+
+      header li {
+        display: inline-block;
+        padding: 15px 2vw;
+        
+      }
+      header a {
+        text-align: center;
+        color: #ffffff;
+        text-decoration: none;
+        font-family: "Open Sans", sans-serif;
+        font-size: 20px;
+      }
+      header a:hover {
+        color: #f0c330;
+        transition: 0.2s;
+      }
+
+      header span {
+        color: #d1d1d1;
+      }
+
+      .sub-titulo {
+        font-family: "Jaldi", sans-serif;
+        text-align: center;
+        color: #d1d1d173;
+        font-size: 25px;
+      }
+      .about {
+        
+        width: 100%;
+        height: 15vh;
+        background-color: #282828;
+        position: absolute;
+        bottom: 0%;
+        color: #d1d1d1;
+        padding-top: 10px;
+        padding-bottom: 10px;
+
+      }
+      .about p {
+        text-align: right;
+        margin-right: 30px;
+        font-size: 100%;
+        font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+          "Lucida Sans", Arial, sans-serif;
+      }
+      .arr {
+        text-align: center;
+      }
+      .btn-entrar {
+        text-align: center;
+        margin-top: 30px;
+      }
+      .btn-entrar button {
+        font-size: 25px;
+        border: solid;
+        background-color: rgba(0, 0, 0, 0);
+        border-radius: 20px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 30px;
+        padding-right: 30px;
+        border-color: #2ea15c;
+        color: #2ea15c;
+        border-width: 3px;
+        font-family: "Open Sans", sans-serif;
+        cursor: pointer;
+        outline: none;
+      }
+      .btn-entrar button:hover {
+        transition: 0.5s;
+        background-color: #2ea15c;
+        color: #313335;
+      }
+      @media (max-height: 650px){
+        .about{
+          display: none;
+        }
+
+      
+      }
+    </style>
+    <!-------->
+  </head>
+  <header>
+    <h1>Q .<span>io</span></h1>
+    <nav>
+      <ul>
+        <li><a href="#">Sobre</a></li>
+        <li><a href="/registrar">Registrar</a></li>
+        <li><a href="/login">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+  <body>
+    <div class="titulo">Quiz.<span>io</span></div>
+    <div class="sub-titulo">Quiz para todos, Quiz.io.</div>
+    <div href="#" class="btn-entrar">
+      <button id="btn-entrar">Entrar</button>
+    </div>
+
+    <div class="about">
+      <div class="about-left">
+        <p>Desenvolvedores: Willian Yamakawa<br /></p>
+        <p>Email: willianysouza2003@gmail.com</p>
+
+        <div class="arr">© 2021 Quiz.io.inc. All Rights Reserved.</div>
+      </div>
+    </div>
+    <script>
+      const btn = document.getElementById("btn-entrar");
+
+      btn.addEventListener("click", async (e) => {
+        e.preventDefault();
+        const ls = JSON.parse(localStorage.getItem("login"));
+        if (ls) {
+          const email = ls.email;
+          senha = ls.senha;
+          const res = await fetch("/login", {
+            method: "POST",
+            body: JSON.stringify({ email: email, senha: senha }),
+            headers: { "Content-Type": "application/json" },
+          });
+          let j = await res.json();
+          if (j.status == "success") {
+            window.location.replace("/main");
+          } else {
+            window.location.href = "/login"
+          }
+        }else{
+          window.location.href = "/login";
+        }
+      });
+    </script>
+  </body>
+</html>

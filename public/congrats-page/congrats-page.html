@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap");
+
+    body {
+        background-color: #282828;
+    }
+    .titulo {
+        font-family: "Alfa Slab One";
+        color: #39ca74;
+        font-size: 50px;
+        text-align: center;
+        margin-top: 40px;
+        letter-spacing: 3px;
+        margin-bottom: 100px;
+      }
+      .titulo span {
+        color: #d1d1d1;
+      }
+      p {
+        font-family: "Ubuntu", sans-serif;
+        color: #d1d1d1;
+        font-size: 28px;
+        margin-bottom: 10px;
+        text-align: center;
+      }
+      button {
+        margin-top: 5px;
+        width: 50%;
+        max-width: 300px;
+        font-size: 20px;
+        height: 45px;
+        font-family: "Ubuntu", sans-serif;
+        letter-spacing: 5px;
+        border-radius: 5px;
+        border: none;
+        background-image: linear-gradient(90deg, #16a54f, #2cd4d4);
+        color: #282828;
+        cursor: pointer;
+        transition: 0.2s;
+        margin-bottom: 15px;
+      }
+      button:hover {
+        transition: 0.2s;
+        color: #d1d1d1;
+      }
+    </style>
+</head>
+<body>
+    <a style="text-decoration: none" href="/main"
+      ><h1 class="titulo">Quiz.<span>io</span></h1></a>
+      <p>💪 Acertos: {ACERTOS}</p>
+      <p>😭 Erros: {ERROS}</p>
+      <p>🏆 Pontos Ganhos: {PONTOSGANHOS}</p>
+      <div style="text-align: center; margin-top: 60px;">
+        <a href="/main"><button>Voltar</button></a>
+      </div>
+      
+</body>
+</html>

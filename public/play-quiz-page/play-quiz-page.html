@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jaldi:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <!--CSS-->
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap");
+        *{
+            box-sizing: border-box;
+        }
+        
+        body, html{
+            
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-color: #282828;
+        }
+        .titulo{
+            text-align: center;
+            width: auto;
+            font-size: calc(40px + 0.5vh*6);
+            font-family: "Alfa Slab One";
+            color: #39ca74;
+            letter-spacing: 2px;
+            margin-top: calc(0.5vh*6);
+            text-decoration: none;
+            
+        }
+        a{
+            text-decoration: none;
+        }
+        .titulo span{
+            color: #d1d1d1;
+        }
+        .container{
+            position: absolute;
+            left: 50%;
+            top: calc(10px + 10vh*2);
+            transform: translate(-50%);
+            max-width:450px;
+            max-height: 500px;
+            min-width: 300px;
+            width: 50%;
+            display: block;
+            
+            
+            
+            
+        }
+        .pergunta{
+            margin: 0px;
+            margin-left: 0px;
+            margin-bottom: 30px;
+            font-family: "Ubuntu", sans-serif;
+            color: #d1d1d1;
+            font-size: 23px;
+            width: 100%;
+            
+
+        }
+        
+        .resposta{
+            font-family: "Ubuntu", sans-serif;
+            margin-left: 10px;
+            margin-right: 10px;
+            margin-bottom: 20px;
+            font-size: 20px;
+            padding: 15px;
+            background-color: #4faaceb4;
+            -webkit-user-select: none; /* Safari */        
+            -moz-user-select: none; /* Firefox */
+            -ms-user-select: none; /* IE10+/Edge */
+            user-select: none; /* Standard */
+            border-radius: 5px;
+            box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+        .resposta:hover{
+            transition: 0.1s;
+            box-shadow: 0 0 6px 6px rgba(0, 6, 8, 0.219);
+            transform: scale(1.1);
+        }
+        #progress{
+            margin-top: 30px;
+            width: 100%;
+            height: 30px;
+            border: none;
+            overflow: hidden;
+            border-radius: 30px;
+            background-color: rgba(0, 0, 0, 0);
+            box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.25);
+            
+            
+        }
+        progress::-webkit-progress-bar {
+            background-color: rgb(0, 0, 0, 0);
+            border-radius: 7px;
+            width: 100%;
+            
+            
+            
+        }
+        progress::-webkit-progress-value {
+            
+            background-image: linear-gradient(90deg, #39ca74, rgb(0, 255, 149));
+            border-radius: 13px;
+            transition: all 500ms ease-out;
+            
+            
+        }
+
+    </style>
+    <!------->
+</head>
+<body>
+    <span id="quiz-info" quizid="${QUIZ-ID}"></span>
+    <a href="/main"><h1 class="titulo">Quiz.<span>io</span></h1></a>
+    <div class="container">
+        <h2 class="pergunta"></h2>
+        <div class="resposta" resp="a"></div>
+        <div class="resposta" resp="b"></div>
+        <div class="resposta" resp="c"></div>
+        <div class="resposta" resp="d"></div>
+        <progress id="progress" value="0" max="10"></progress>
+    </div>
+    
+    <script>
+        const email = JSON.parse(localStorage.getItem('login'))?.email || "null"
+        const senha = JSON.parse(localStorage.getItem('login'))?.senha || "null"
+            fetch("/login", {
+            method: "POST",
+            body: JSON.stringify({email: email, senha: senha}),
+            headers: { "Content-Type": "application/json" },
+          }).then((res) => res.json().then(j =>{
+            if(j.status == "success"){
+            
+          }else{
+            window.location.href = "/login"
+          }
+          }));
+
+        const pergunta = document.getElementsByClassName('pergunta');
+        const progress = document.getElementById('progress');
+        const resps = document.getElementsByClassName('resposta');
+        
+
+
+        const quiz_info = document.getElementById('quiz-info');
+        const id = quiz_info.getAttribute('quizid')
+
+        let currperg = 1;
+        let right = 0;
+        let wrong = 0;
+        let points = 0;
+        let req = {id: id, resp:[]}
+        let user_email = JSON.parse(localStorage.getItem('login')).email
+        let _data;
+        let perguntas_length;
+
+        
+        
+        fetch('/get-quiz/'+id, {method: "GET"}).then((res) => {
+            res.json().then((data) => {
+                //LOGIC COMES HERE ------------------
+                _data = data;
+                perguntas_length = data.perguntas.length
+                update_bar(perguntas_length, currperg-1)
+                if(_data.status == "success"){
+                    showperg();
+                    for(let i = 0; i < resps.length;i++){
+                        resps[i].addEventListener('click', (e) => {
+                            verify(i);
+                            
+                    })
+                }
+                }else{
+                    window.location.href = "/serverissues"
+                }
+            });
+        })
+        
+        function showperg(){
+            if(currperg <= perguntas_length){
+                pergunta[0].innerHTML = _data.perguntas[currperg-1].pergunta;
+                resps[0].innerHTML = _data.perguntas[currperg-1].a;
+                resps[1].innerHTML = _data.perguntas[currperg-1].b;
+                resps[2].innerHTML = _data.perguntas[currperg-1].c;
+                resps[3].innerHTML = _data.perguntas[currperg-1].d;
+            }else{
+                window.location.href = "/resultados?right="+right+"&wrong="+wrong
+            }
+            
+        }
+        function update_bar(max, value){
+            progress.max = max;
+            progress.value = value;
+            
+        }
+
+        function animation(index, right){
+            update_bar(perguntas_length, currperg-1)
+            for(let i =0; i<resps.length;i++){
+                if(resps[i].getAttribute("resp") == right){
+                    resps[i].style = "background-color: #4fce5ab4"
+                }else{
+                    resps[i].style = "background-color: #ce4f4fb4"
+                }
+            }
+            setTimeout((() =>{
+                for(let i =0; i<resps.length;i++){
+                    resps[i].style = "background-color: #4faaceb4"
+                }
+                showperg();
+            }), 2000)
+            
+        }
+
+        function verify(i){
+            let letter = resps[i].getAttribute('resp')
+                            fetch('/get-quiz/'+id, {method: "POST", body:JSON.stringify({letter: letter, pergunta:currperg-1, user_email: user_email}), 
+                            headers: { "Content-Type": "application/json" }}).then((res) => {
+                                res.json().then((data) => {
+                                    if(data.status == "right"){
+                                        right += 1;
+                                        currperg++;
+                                        animation(i, data.right)
+                                        
+                                    }else if(data.status == "wrong"){
+                                        wrong += 1;
+                                        currperg++;
+                                        animation(i, data.right)
+                                        
+                                    }else{
+                                        pergunta[0].innerHTML = "### Server Issues";
+                                    }
+                                })
+                            })
+            
+        }
+        
+        
+        
+
+    </script>
+</body>
+</html>

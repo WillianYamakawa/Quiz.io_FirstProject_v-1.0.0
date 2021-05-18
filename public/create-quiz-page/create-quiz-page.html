@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jaldi:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <!--CSS-->
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap");
+        *{
+            box-sizing: border-box;
+        }
+        
+        body, html{
+            
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-color: #282828;
+        }
+        .titulo{
+            text-align: center;
+            width: auto;
+            font-size: calc(40px + 0.5vh*6);
+            font-family: "Alfa Slab One";
+            color: #39ca74;
+            letter-spacing: 2px;
+            margin-top: calc(0.5vh*6);
+            text-decoration: none;
+            
+        }
+        a{
+            text-decoration: none;
+        }
+        .titulo span{
+            color: #d1d1d1;
+        }
+        .container{
+            position: absolute;
+            left: 50%;
+            top: calc(10px + 10vh*2);
+            transform: translate(-50%);
+            max-width:450px;
+            min-width: 300px;
+            width: 50%;
+            display: block;
+            
+            
+            
+            
+        }
+        .pergunta{
+            margin: 0px;
+            margin-left: 0px;
+            margin-bottom: 30px;
+            font-family: "Ubuntu", sans-serif;
+            color: #d1d1d1;
+            font-size: 23px;
+            width: 100%
+            
+
+        }
+        
+        .resposta, select{
+            font-family: "Ubuntu", sans-serif;
+            margin-left: 10px;
+            margin-right: 10px;
+            margin-bottom: 20px;
+            font-size: 20px;
+            padding: 15px;
+            background-color: #4faaceb4;
+            width: 95%;
+            border: solid;
+            border-color: #3d3d3d75;
+            outline: none;
+            border-radius: 20px;
+            box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+        
+        #tema{
+            margin-bottom: 60px;
+        }
+        #progress{
+            margin-bottom: 30px;
+            width: 100%;
+            height: 30px;
+            border: none;
+            overflow: hidden;
+            border-radius: 30px;
+            background-color: rgba(0, 0, 0, 0);
+            box-shadow: 0 0 8px 4px rgba(0, 0, 0, 0.25);
+            
+            
+        }
+        progress::-webkit-progress-bar {
+            background-color: rgb(0, 0, 0, 0);
+            border-radius: 7px;
+            width: 100%;
+            
+            
+            
+        }
+        progress::-webkit-progress-value {
+            
+            background-image: linear-gradient(90deg, #39ca74, rgb(0, 255, 149));
+            border-radius: 13px;
+            transition: all 500ms ease-out;
+            
+            
+        }
+        button{
+            font-family: "Ubuntu", sans-serif;
+            margin-left: 10px;
+            margin-top: 20px;
+            margin-bottom: 50px;
+            font-size: 20px;
+            padding: 15px;
+            background-color: #4fce6fb4;
+            margin-left: 140px;
+            width: 60%;
+            border: none;
+            outline: none;
+            border-radius: 20px;
+            box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.1);
+            transition: 0.3s;
+        }
+        button:hover{
+            transform: scale(1.1);
+        }
+        .hide{
+            display: none;
+        }
+        .err{
+            font-size: 18px;
+            color: #d1d1d16e;
+        }
+        
+
+
+    </style>
+    <!------->
+</head>
+<body>
+    <span id="quiz-info" quizid="${QUIZ-ID}"></span>
+    <a href="/main"><h1 class="titulo">Quiz.<span>io</span></h1></a>
+    <div class="container">
+        <h2 class="pergunta err" id="p_tema">O tema deve conter no máximo 15 caracteres</h2>
+        <progress id="progress" class="hide" value="0" max="10"></progress>
+        <h2 class="pergunta" id="p_tema">Tema:</h2>
+        <input class="resposta" id="tema" resp="a"></input>
+        <h2 class="pergunta" id="p_num">Numero de perguntas:</h2>
+        <select name="" class="" id="num">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+            <option value="10">10</option>
+        </select>
+        <h2 class="pergunta hide" id="p_pergunta">Pergunta:</h2>
+        <input class="resposta hide" id="pergunta" resp="a"></input>
+        <h2 class="pergunta hide" id="p_respostas">Respostas:</h2>
+        <input class="resposta hide" id="resposta"  resp="a"></input>
+        <input class="resposta hide" id="resposta" resp="b"></input>
+        <input class="resposta hide" id="resposta" resp="c"></input>
+        <input class="resposta hide" id="resposta" resp="d"></input>
+        <h2 class="pergunta hide" id="certa">Certa:</h2>
+        <select name="" class="hide" id="select">
+            
+        </select>
+        <button id="btn">Próxima</button>
+        
+        
+    </div>
+    <script>
+        const email = JSON.parse(localStorage.getItem('login'))?.email || "null"
+        const senha = JSON.parse(localStorage.getItem('login'))?.senha || "null"
+            fetch("/login", {
+            method: "POST",
+            body: JSON.stringify({email: email, senha: senha}),
+            headers: { "Content-Type": "application/json" },
+          }).then((res) => res.json().then(j =>{
+            if(j.status == "success"){
+        
+        const p_num = document.querySelector("#p_num")
+        const num = document.querySelector("#num")  
+        let numPerg = 1  
+        const certa = document.querySelector("#certa")
+        const select = document.querySelector("#select")
+        const p_pergunta = document.querySelector("#p_pergunta");
+        const p_tema = document.querySelectorAll("#p_tema");
+        const p_respostas = document.querySelector("#p_respostas");
+        const pergunta = document.querySelector("#pergunta");
+        const tema = document.querySelector("#tema");
+        const respostas = document.querySelectorAll("#resposta");
+        const progress = document.querySelector("#progress")
+        const btn = document.querySelector("#btn")
+        let hasFineshed = false;
+        let hasTema = false;
+        let req = {perguntas:[]}
+        select.addEventListener("focus", e =>{
+            for(let i = 0;i<respostas.length;i++){
+                select.options[i] = new Option(respostas[i].value, respostas[i].getAttribute('resp'), false, false)
+            }
+        })
+        btn.addEventListener('click', (e) =>{
+            e.preventDefault();
+            if(!hasFineshed){
+                if(!hasTema && tema.value != ''){
+                req.tema = tema.value;
+                req.email = email;
+                p_tema[0].classList.add("hide")
+                p_tema[1].classList.add("hide")
+                tema.classList.add("hide")
+                p_pergunta.classList.remove("hide")
+                p_respostas.classList.remove("hide")
+                pergunta.classList.remove("hide")
+                progress.classList.remove("hide")
+                certa.classList.remove("hide");
+                select.classList.remove("hide");
+                p_num.classList.add("hide");
+                num.classList.add("hide")
+                for(let i =0;i<respostas.length;i++){
+                    respostas[i].classList.remove("hide")
+                }
+                numPerg = num.value;
+                progress.max = parseInt(numPerg)
+                hasTema = !hasTema
+            }else{
+                let rPergunta = pergunta.value;
+                    let a = respostas[0].value;
+                    let b = respostas[1].value;
+                    let c = respostas[2].value;
+                    let d = respostas[3].value;
+                    let certa = select.value;
+                    if(a == '' || b == '' || c == '' || d == '' || rPergunta == '' || certa == ''){
+                        //MENSAGEM DE ERRO
+                    }else{
+                        req.perguntas.push({a: a, b: b, c:c, d:d, certa: certa, pergunta: rPergunta})
+                        progress.value += 1;
+                        respostas[0].value = '';
+                        respostas[1].value = '';
+                        respostas[2].value = '';
+                        respostas[3].value = '';
+                        pergunta.value = '';
+                        for(let i = 0;i<respostas.length;i++){
+                        select.options[i] = new Option(respostas[i].value,respostas[i].getAttribute('resp'), false, false)
+                        }
+                        window.scrollTo(0, 0);
+                        if(req.perguntas.length >= parseInt(numPerg)){
+                            console.log(req.perguntas.length);
+                            console.log(numPerg);
+                            fetch("/criarquiz", {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json"},
+                                body: JSON.stringify(req)
+                            }).then(res => res.json().then(status =>{
+                                hasFineshed = true;
+                                window.location.href = "/success"
+                                
+                            }))
+                        }
+                    }
+                
+            }
+            }
+        })
+
+          }else{
+            window.location.href = "/login"
+          }
+          }));
+
+
+        
+
+        
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+{
+  "curr_id": 11,
+  "quiz": [
+    {
+      "id": 0,
+      "nome": "Admin",
+      "tema": "Gerais",
+      "perguntas": [
+        {
+          "pergunta": "Qual a capital dos EUA?",
+          "a": "New York",
+          "b": "Mato Grosso",
+          "c": "Washington",
+          "d": "Paris",
+          "certa": "c"
+        },
+        {
+          "pergunta": "Qual é a cor da fruta laranja?",
+          "a": "Azul",
+          "b": "Amarelo",
+          "c": "Vermelho",
+          "d": "Laranja",
+          "certa": "d"
+        },
+        {
+          "pergunta": "Se agora é 19h, que horas serão daqui 5h?",
+          "a": "0h",
+          "b": "1h",
+          "c": "2h",
+          "d": "3h",
+          "certa": "a"
+        },
+        {
+          "pergunta": "Qual linguagem de programação usada nos navegadores Web?",
+          "a": "Java",
+          "b": "JavaScript",
+          "c": "C++",
+          "d": "Python",
+          "certa": "b"
+        },
+        {
+          "pergunta": "Qual linguagem de programação é mais usada para desenvolvimento mobile?",
+          "a": "Java",
+          "b": "JavaScript",
+          "c": "C++",
+          "d": "Python",
+          "certa": "a"
+        }
+      ]
+    }
+  ]
+}

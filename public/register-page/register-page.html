@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <!---CSS-->
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap");
+
+      body {
+        background-color: #282828;
+      }
+      .main-div {
+        position: absolute;
+        top: 360px;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .titulo {
+        font-family: "Alfa Slab One";
+        color: #39ca74;
+        font-size: 50px;
+        text-align: center;
+        margin-top: 40px;
+        letter-spacing: 3px;
+      }
+      .titulo span {
+        color: #d1d1d1;
+      }
+
+      .main-div p {
+        font-family: "Ubuntu", sans-serif;
+        color: #d1d1d1;
+        font-size: 23px;
+        margin-bottom: 10px;
+      }
+      .main-div input{
+        font-size: 20px;
+        padding-top: 10px;
+        padding-bottom: 8px;
+        padding-left: 20px;
+        padding-right: 20px;
+        border-radius: 10px;
+        border: solid;
+        margin-bottom: 30px;
+        background-color: rgba(68, 68, 68, 0.5);
+        border-color: rgba(255, 255, 255, 0.089);
+        outline: none;
+        color: #d1d1d1;
+        transition: 0.3s;
+      }
+      .main-div button {
+        margin-top: 5px;
+        width: 100%;
+        font-size: 20px;
+        
+        height: 45px;
+        font-family: "Ubuntu", sans-serif;
+        letter-spacing: 5px;
+        border-radius: 5px;
+        border: none;
+        background-image: linear-gradient(90deg, #16a54f, #2cd4d4);
+        color: #282828;
+        cursor: pointer;
+        transition: 0.2s;
+        margin-bottom: 15px;
+      }
+      .main-div button:hover {
+        transition: 0.2s;
+        color: #d1d1d1;
+      }
+      .main-div input:focus {
+        transition: 0.3s;
+        border-color: #168341;
+        border-radius: 5px;
+        background-color: rgba(68, 68, 68, 0.5);
+      }
+      
+      .main-div a {
+        color: #d1d1d150;
+        text-decoration: none;
+        transition: 0.2s;
+        font-family: "Ubuntu", sans-serif;
+        font-size: 15px;
+      }
+      .main-div a:hover{
+          color: #16a54f;
+          transition: 0.2s;
+          
+      }
+      
+      .tenho{
+        margin-bottom: 30px;
+      }
+      .aviso {
+        margin-top: -22px;
+        color: #ff0000e0;
+        text-decoration: none;
+        transition: 0.2s;
+        font-family: "Ubuntu", sans-serif;
+        font-size: 18px;
+        text-align: center;
+      }
+      .hide {
+        visibility: hidden;
+      }
+    </style>
+    <!-------->
+  </head>
+  <body>
+    
+    <a style="text-decoration: none;"href="/"><h1 class="titulo">Quiz.<span>io</span></h1></a>
+    
+
+    <div class="main-div">
+      <p>Crie uma conta para você</p>
+      <div class="tenho"><a href="/login">Já tenho uma conta</a></div>
+      <input id="nome" type="text" placeholder="Primeiro nome" /><br />
+      <input id="email" type="text" placeholder="Email" /><br />
+      <input id="senha" type="password" placeholder="Senha" /><br />
+      <input id="r-senha" type="password" placeholder="Repetir senha" /><br />
+      <div id="aviso" class="aviso"></div>
+      <button id="btn" >CRIAR</button>
+      
+      
+      <script>
+
+        const nome = document.querySelector("#nome");
+        const email = document.querySelector("#email");
+        const senha = document.querySelector("#senha");
+        const aviso = document.querySelector("#aviso");
+        const r_senha = document.querySelector("#r-senha");
+        const btn = document.querySelector("#btn").addEventListener('click', async (e) =>{
+          
+          e.preventDefault()
+          if(senha.value == r_senha.value){
+            let res = await fetch("/registrar", {
+              method: "POST",
+              body: JSON.stringify({ nome: nome.value, email: email.value, senha: senha.value }),
+              headers: { "Content-Type": "application/json" },
+            })
+            let j = await res.json();
+            console.log(j);
+            if(j.status == "error"){
+              aviso.textContent = j.message;
+            }else{
+              window.location.href = "/login";
+            }
+          } else{
+            aviso.textContent = "Senhas diferentes"
+          }
+
+          
+          
+        });
+
+
+
+      </script>
+    </div>
+  </body>
+</html>

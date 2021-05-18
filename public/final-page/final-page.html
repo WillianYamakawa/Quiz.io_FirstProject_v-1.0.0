@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jaldi:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@600&display=swap" rel="stylesheet">
+    <!---CSS-->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Alfa+Slab+One&display=swap");
+      
+      *{
+        box-sizing: border-box;
+        margin: 0px;
+        padding: 0px;
+        
+      }
+      body{
+        background-color: #24252a;
+      }
+      header h1{
+        font-family: "Alfa Slab One";
+        color: #39ca74;
+        letter-spacing: 2px;
+      }
+      .logo span{
+        color:#edf0f1;
+      }
+      header li, header a, header button{
+        font-family: "Open Sans", sans-serif;
+        font-weight: 500;
+        font-size: 16px;
+        color: #edf0f1;
+        text-decoration: none;
+      }
+      header{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 5%;
+        margin-top: 20px;
+        margin-left: 5%;
+        margin-right: 5%;
+        border-radius: 60px;
+        background-color: #15171f;
+      }
+      
+      .nav_links{
+        list-style: none;
+
+      }
+      .nav_links li{
+        display: inline-block;
+        padding: 0px 20px;
+      }
+      .nav_links li p{
+        transition: all 0.3s ease 0s;
+      }
+      .nav_links li p:hover{
+        transition: all 0.3s ease 0s;
+        color: #0088a9;
+        cursor: pointer;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none; 
+        -khtml-user-select: none; 
+        -moz-user-select: none; 
+        -ms-user-select: none;
+        user-select: none;
+      }
+      
+      header button{
+        padding: 1px 40px;
+        background-color: rgba(0, 136, 169, 1);
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease 0s;
+        font-size: 30px;
+        
+      }
+      header button:focus{outline: none}
+      header button:hover{
+        background-color: rgba(0, 136, 169, 0.8);
+      }
+      .quiz-area{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-items: flex-start;
+        align-content: flex-start;
+        max-width: 1000px;
+        min-height: 70vh;
+        margin-top: 30px;
+        border-radius: 10px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #2b2e36;
+        
+      }
+      .container{
+        box-sizing: content-box;
+        flex: 1 0 25%;
+        font-family: "Ubuntu", sans-serif;
+        width: 180;
+        height: 190px;
+        text-align: center;
+        border-radius: 10px;
+        padding: 30px;
+        max-width: 300px;
+        background-color: #84bdffb4;
+        transition: 0.3s;
+        margin: 30px;
+        color: #000000;
+        box-shadow: 0 0 15px 4px rgba(0, 0, 0, 0.678);
+      }
+      .tema{
+        word-wrap: break-word;
+        font-size: 25px;
+      }
+      .criador{
+        margin-top: 20px;
+        font-size: 20px;
+      }
+      .jogar{
+        font-family: "Ubuntu", sans-serif;
+        font-size: 20px;
+        margin-top: 20px;
+        width: 80%;
+        height: 40px;
+        border: solid;
+        border-radius: 15px;
+        border-color: #2b2e36;
+        color: #2b2e36;
+        background-color: rgba(255, 230, 0, 0);
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .jogar:hover{
+        transition: 0.2s;
+        background-color: #2b2e36;
+        color: #8adeffb4;
+      }
+      
+      
+      @media (max-width: 510px){
+        .quiz-area{
+          justify-content: space-around;
+        }
+      }
+
+      @media (max-width: 800px){
+        .nome{
+          display: none;
+        }
+        header{
+
+        margin-top: 0px;
+        margin-left: 0px;
+        margin-right: 0px;
+        border-radius: 0px;
+      }
+        header button{
+          padding: 1px 20px;
+        }
+        
+        .placar{
+          margin-left: -50px;
+        }
+      }
+      @media (max-width: 380px){
+        
+        header h1{
+          display: none;
+        }
+      }
+      
+    </style>
+    <!-------->
+</head>
+<body>
+    <header>
+      <h1 class="logo">Quiz.<span>io</span></h1>
+      <nav>
+        <ul class="nav_links">
+          <li><p  class="nome">Willian</p></li>
+          <li><p class="placar">🏆 <span class="pontuacao">0</span> points</p></li>
+        </ul>
+      </nav>
+      <a class="cta" href="/criarquiz"><Button>+</Button></a>
+    </header>
+    <section class="quiz-area">
+    </section>
+
+    <script>
+      const email = JSON.parse(localStorage.getItem('login'))?.email || "null"
+      const senha = JSON.parse(localStorage.getItem('login'))?.senha || "null"
+      const nome = document.querySelector('.nome');
+      const placar = document.querySelector('.pontuacao');
+      const quiz_area = document.querySelector('.quiz-area');
+
+      //GET NAME AND POINTS AND QUIZES
+      fetch("/main", {
+            method: "POST",
+            body: JSON.stringify({email: email, senha: senha}),
+            headers: { "Content-Type": "application/json" },
+          }).then((res) => res.json().then(j =>{
+            if(j.status == "success"){
+              
+              nome.innerHTML = j.nome;
+              placar.innerHTML = j.placar;
+              for(let i = 0;i<j.quizes.length;i++){
+                quiz_area.insertAdjacentHTML('beforeend',`<div class="container">
+                <p class="tema">${j.quizes[i].tema}</p>
+                <p class="criador">Criador: ${j.quizes[i].nome}</p>
+                <button quizid="${j.quizes[i].id}" class="jogar">Jogar</button>
+                 </div>`)
+              }
+              let btns = document.querySelectorAll(".jogar")
+              for(let i = 0; i< btns.length;i++){
+                btns[i].addEventListener("click", (e) =>{
+                  window.location.href = "/quiz?id="+btns[i].getAttribute('quizid');
+                })
+              }
+
+
+
+
+          }else if(j.status == "login error"){
+            window.location.href = "/login"
+          }
+          else{
+            window.location.href = "/serverissues"
+          }
+          }));
+
+          
+
+
+    </script>
+</body>
+</html>
