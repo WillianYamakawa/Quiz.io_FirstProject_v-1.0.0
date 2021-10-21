@@ -1,7 +1,8 @@
 # Quiz.io_FirstProject_v-1.0.0
-My first own project, it was designed to be an simple and not that secure project, aimed to be intuitive and fun
+My first own project, it was designed to be an simple, intuitive and fun.
 
 # 1746 lines of code
+
 
 Database: no use of databases so it becomes easier to set up this site on your computer
 
