@@ -1,5 +1,5 @@
 # Quiz.io_FirstProject_v-1.0.0
-My first own project, it was designed to be an simple, intuitive and fun.
+My first own project, it was designed to be an simple, intuitive and fun. 
 
 # 1746 lines of code
 
